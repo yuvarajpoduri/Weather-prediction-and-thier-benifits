@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Feedback</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<style>
+		body{
+			background-image: none;
+			background-color: black;
+		}
+	</style>
+	<div class="feedback-container">
+		<h1>Feedback</h1>
+		<form action="submit-feedback.php" method="POST">
+			<section>
+				<label for="name">Name:</label>
+				<input type="text" id="name" name="name" placeholder="Your name.." maxlength="50" required autofocus>
+			</section>
+
+			<section>
+				<label for="email">Email:</label>
+				<input type="email" id="email" name="email" placeholder="Your email.." maxlength="50" required>
+			</section>
+
+			<section>
+				<label for="subject">Subject:</label>
+				<select id="subject" name="subject">
+					<option value="general">General Feedback</option>
+					<option value="bug">Bug Report</option>
+					<option value="suggestion">Suggestion</option>
+				</select>
+			</section>
+
+			<section>
+				<label for="message">Message:</label>
+				<textarea id="message" name="message" placeholder="Write something.." required></textarea>
+			</section>
+
+			<section>
+				<label for="rating">Rate our weather predictions:</label>
+				<br>
+				<br>
+				<input type="radio" id="1-star" name="rating" value="1">
+				<label for="1-star">1 star</label>
+
+				<input type="radio" id="2-stars" name="rating" value="2">
+				<label for="2-stars">2 stars</label>
+
+				<input type="radio" id="3-stars" name="rating" value="3">
+				<label for="3-stars">3 stars</label>
+
+				<input type="radio" id="4-stars" name="rating" value="4">
+				<label for="4-stars">4 stars</label>
+
+				<input type="radio" id="5-stars" name="rating" value="5">
+				<label for="5-stars">5 stars</label>
+			</section>
+			<br>
+			<br>
+
+			<section>
+				<label for="newsletter">Sign up for our newsletter:</label>
+				<br>
+				<br>
+				<input type="checkbox" id="newsletter" name="newsletter" value="yes">
+				<label for="newsletter">Yes, please send me weather updates and news.</label>
+			</section>
+
+			<input type="submit" value="Submit">
+		</form>
+	</div>
+</body>
+</html>
