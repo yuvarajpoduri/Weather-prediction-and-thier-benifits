@@ -13,23 +13,58 @@ body{
     overflow:hidden;
     height: 100vh;
     font-family: 'Poppins', sans-serif;
+    perspective: 1000px; /* 3D perspective */
 }
 
 .container{
     padding: 20px 70px;
     color:#fff;
+    transform-style: preserve-3d;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px) translateZ(0px) rotateX(0deg);
+    }
+    50% {
+        transform: translateY(-10px) translateZ(20px) rotateX(5deg);
+    }
+    100% {
+        transform: translateY(0px) translateZ(0px) rotateX(0deg);
+    }
 }
 
 .current-info{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    transform-style: preserve-3d;
 }
+
 .date-container{
     font-weight: 100;
+    transform: translateZ(20px);
+    transition: transform 0.5s;
 }
+
+.date-container:hover {
+    transform: translateZ(40px) scale(1.05);
+}
+
 .date-container .time{
     font-size: 70px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    to {
+        text-shadow: 4px 4px 8px rgba(0,0,0,0.8);
+    }
 }
 
 .date-container #am-pm{
@@ -43,6 +78,12 @@ body{
 
 .place-container{
     text-align: end;
+    transform: translateZ(15px);
+    transition: transform 0.3s ease;
+}
+
+.place-container:hover {
+    transform: translateZ(30px) scale(1.03);
 }
 
 .place-container .time-zone{
@@ -59,17 +100,30 @@ body{
     display: flex;
     flex-direction: column;
     background: rgba(24,24,27, 0.6);
-    padding:20px;
+    padding: 20px;
     border-radius: 10px;
     margin: 10px 0;
     border: 1px solid #eee;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    transform: translateZ(10px);
+    transition: all 0.3s ease;
+}
+
+.current-info .others:hover {
+    transform: translateZ(30px) scale(1.02);
+    box-shadow: 0 12px 36px 0 rgba(31, 38, 135, 0.6);
 }
 
 .current-info .others .weather-item{
     display: flex;
     justify-content: space-between;
+    transition: transform 0.2s;
 }
 
+.current-info .others .weather-item:hover {
+    transform: scale(1.05);
+}
 
 .future-forecast{
     background: rgba(24,24,27,0.8);
@@ -77,11 +131,14 @@ body{
     position: fixed;
     bottom: 0;
     display: flex;
-    color:white;
+    color: white;
     width: 100%;
     align-items: center;
     justify-content: center;
     overflow-y: hidden;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    box-shadow: 0 -10px 20px rgba(0,0,0,0.3);
 }
 
 .future-forecast .today{
@@ -90,10 +147,18 @@ body{
     justify-content: center;
     border: 1px solid #eee;
     border-radius: 10px;
-    padding:15px;
+    padding: 15px;
     padding-right: 40px;
     border-radius: 10px;
-    background: rgba(0,0,0,0.2)
+    background: rgba(0,0,0,0.2);
+    transform: translateZ(20px);
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.future-forecast .today:hover {
+    transform: translateZ(40px) scale(1.03);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.4);
 }
 
 .future-forecast .today .day{
@@ -101,6 +166,13 @@ body{
     background: #3c3c44;
     border-radius: 50px;
     text-align: center;
+    transform: translateZ(5px);
+    transition: all 0.2s ease;
+}
+
+.future-forecast .today .day:hover {
+    transform: translateZ(10px) scale(1.1);
+    background: #4c4c54;
 }
 
 .future-forecast .today .temp{
@@ -110,6 +182,7 @@ body{
 
 .future-forecast .weather-forecast{
     display: flex;
+    transform-style: preserve-3d;
 }
 
 .weather-forecast .weather-forecast-item{
@@ -121,7 +194,33 @@ body{
     border: 1px solid #eee;
     padding: 15px;
     border-radius: 10px;
-    background: rgba(0,0,0,0.2)
+    background: rgba(0,0,0,0.2);
+    transform: translateZ(5px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    animation: card-float 4s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 0.2s);
+}
+
+.weather-forecast-item:nth-child(1) { --i: 1; }
+.weather-forecast-item:nth-child(2) { --i: 2; }
+.weather-forecast-item:nth-child(3) { --i: 3; }
+.weather-forecast-item:nth-child(4) { --i: 4; }
+.weather-forecast-item:nth-child(5) { --i: 5; }
+.weather-forecast-item:nth-child(6) { --i: 6; }
+
+@keyframes card-float {
+    0%, 100% {
+        transform: translateY(0) translateZ(5px) rotateY(0deg);
+    }
+    50% {
+        transform: translateY(-5px) translateZ(15px) rotateY(5deg);
+    }
+}
+
+.weather-forecast .weather-forecast-item:hover {
+    transform: translateZ(30px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
 }
 
 .weather-forecast .weather-forecast-item .day{
@@ -129,6 +228,12 @@ body{
     background: #3C3C44;
     border-radius: 50px;
     text-align: center;
+    transition: all 0.2s ease;
+}
+
+.weather-forecast-item .day:hover {
+    background: #4C4C54;
+    transform: scale(1.1);
 }
 
 .weather-forecast .weather-forecast-item .temp{
@@ -136,8 +241,170 @@ body{
     font-size: 12px;
 }
 
+.w-icon {
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
+    transform: translateZ(10px);
+    transition: all 0.3s ease;
+    animation: icon-pulse 3s infinite alternate;
+}
 
-@media only screen and  (max-width:730px){
+@keyframes icon-pulse {
+    from {
+        filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
+        transform: translateZ(10px) scale(1);
+    }
+    to {
+        filter: drop-shadow(4px 8px 12px rgba(0,0,0,0.7));
+        transform: translateZ(20px) scale(1.05);
+    }
+}
+
+.w-icon:hover {
+    transform: translateZ(30px) scale(1.1);
+    filter: drop-shadow(4px 8px 12px rgba(0,0,0,0.7));
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: 20px auto;
+    font-size: 1.2em;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+  
+nav a {
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    transform: translateZ(10px);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+  
+nav a:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+nav a:hover:after {
+    transform: scaleX(1);
+}
+  
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transform: translateZ(20px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+  
+nav a.active {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #000;
+    transform: translateZ(15px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+.feedback-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 50px;
+    border-radius: 15px;
+    transform-style: preserve-3d;
+    transform: translateZ(20px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    transition: all 0.4s ease;
+}
+
+.feedback-container:hover {
+    transform: translateZ(40px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+h1 {
+    color: maroon;
+    text-align: center;
+    margin-bottom: 50px;
+    transform: translateZ(15px);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 2px 2px 4px rgba(128, 0, 0, 0.5);
+    }
+    to {
+        text-shadow: 4px 4px 8px rgba(255, 0, 0, 0.7);
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    transform-style: preserve-3d;
+}
+
+label {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    transform: translateZ(5px);
+    transition: transform 0.3s ease;
+}
+
+label:hover {
+    transform: translateZ(10px) scale(1.02);
+}
+
+input[type="text"], input[type="email"], select, textarea {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    background-color: #282828;
+    color: white;
+    border-radius: 5px;
+    transform: translateZ(5px);
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+}
+
+input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+    transform: translateZ(15px);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5), 0 0 10px rgba(255,255,255,0.3);
+    outline: none;
+}
+
+input[type="submit"] {
+    background-color: maroon;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transform: translateZ(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+input[type="submit"]:hover {
+    background-color: #5d001e;
+    transform: translateZ(20px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+@media only screen and (max-width:730px){
     
     .container{
         padding: 20px;
@@ -146,7 +413,7 @@ body{
     .future-forecast{
         justify-content: start;
         align-items: none;
-        overflow-y: scroll;
+        overflow-x: scroll;
     }
 
     .future-forecast .today .temp{
@@ -191,73 +458,3 @@ body{
         overflow-x: scroll;
     }
 }
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    margin: 20px auto;
-    font-size: 1.2em;
-  }
-  
-  nav a {
-    padding: 10px 20px;
-    color: #fff;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  nav a:hover {
-    background-color: #fff;
-    color: #000;
-  }
-  
-  nav a.active {
-    background-color: #fff;
-    color: #000;
-  }
-  .feedback-container {
-	background-color: black;
-	color: white;
-	padding: 50px;
-}
-
-h1 {
-	color: maroon;
-	text-align: center;
-	margin-bottom: 50px;
-}
-
-form {
-	display: flex;
-	flex-direction: column;
-}
-
-label {
-	font-size: 1.2em;
-	margin-bottom: 10px;
-}
-
-input[type="text"], input[type="email"], select, textarea {
-	padding: 10px;
-	margin-bottom: 20px;
-	border: none;
-	background-color: #282828;
-	color: white;
-}
-
-input[type="submit"] {
-	background-color: maroon;
-	color: white;
-	padding: 10px 20px;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-}
-
-input[type="submit"]:hover {
-	background-color: #5d001e;
-}
-  
